@@ -15,9 +15,9 @@ import java.sql.Statement;
  * @author Tran Thang
  */
 public class ketNoi {
-    Connection cnn;
-    Statement stmt;
-    void ketNoi(){
+    public Connection cnn;
+    public Statement stmt;
+    public void ketNoi(){
         try {
             Class.forName("com.hxtt.sql.access.AccessDriver");//nap driver
             cnn=DriverManager.getConnection("jdbc:access:/F:\\Java\\baiCuoiKyCongNghePM\\coSoDuLieuCNPM.mdb");//tạo đối tượng
@@ -27,7 +27,7 @@ public class ketNoi {
             System.out.println(e.toString());
         }
     }
-    void ngatketnoi(){
+    public void ngatketnoi(){
         try {
             if(stmt!=null)
                 stmt.close();

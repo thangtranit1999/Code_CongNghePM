@@ -21,7 +21,22 @@ public class Dangnhap_Chinh extends javax.swing.JFrame {
         initComponents();
     }
     String dl[] = new String[2];
-
+    private boolean ktra(){
+        String err="";
+        if(txtUser.getText().length()==0){
+            err+="Bạn chưa điền UserName\n";
+        }
+        if(txtPass.getText().equals("")){
+            err+="Bạn chưa điền PassWord\n";
+        }
+        if(!err.equals("")){
+            JOptionPane.showMessageDialog(this, err);
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -147,15 +162,19 @@ public class Dangnhap_Chinh extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        new dangKy().setVisible(true);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        dl[0]=txtUser.getText();
-        dl[1]=txtPass.getText();
-        dkDangNhap dn = new dkDangNhap(dl);
-        //System.out.println(dn.getKQ());
-        JOptionPane.showMessageDialog(this, dn.getKQ());
+        if(ktra()==true){
+            dl[0]=txtUser.getText();
+            dl[1]=txtPass.getText();
+            dkDangNhap dn = new dkDangNhap(dl);
+            //System.out.println(dn.getKQ());
+            JOptionPane.showMessageDialog(this, dn.getKQ());
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
