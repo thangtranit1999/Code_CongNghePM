@@ -63,7 +63,24 @@ public class dangKy extends javax.swing.JFrame {
         //String a="";
         try {
             kn.ketNoi();
-            String sql="select username from taiKhoan where username='"+txtUsername.getText()+"';";
+            System.out.println("tra user"+dl[6]);
+            String sql="select username from taiKhoanSV where username='"+dl[6]+"';";
+            kn.stmt = kn.cnn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = kn.stmt.executeQuery(sql);
+            if(rs.next()==true)
+                return true;
+            /*while(rs.next()){
+                a+=rs.getString("username");   
+            }*/
+            
+            kn.ngatketnoi();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.toString());
+        }
+        try {
+            kn.ketNoi();
+            System.out.println("tra user"+dl[6]);
+            String sql="select username from taiKhoanGV where username='"+dl[6]+"';";
             kn.stmt = kn.cnn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = kn.stmt.executeQuery(sql);
             if(rs.next()==true)
@@ -132,31 +149,50 @@ public class dangKy extends javax.swing.JFrame {
         if (txtUsername.getText().equals("")) {
             err += "bạn chưa điền ten dang nhap\n";
         }
+        else{
+            if(TraUser()==true){
+                err+="Đã tồn tại userName này vui lòng điền userName khác!\n";
+            }
+        }
         if (txtPass.getPassword().equals("")) {
             err += "bạn chưa mat khau\n";
         }
         if (!txtnhaplai.getText().equals(txtPass.getText())) {
             err += "mật khẩu không khớp\n";
         }
-        try {
+        if(txtNgaySinh.getText().equals("")){
+            err+="Bạn phải điền họ tên";
+        }
+        else{
+            try {
             Date ns = Date.valueOf(txtNgaySinh.getText());
-        } catch (Exception e) {
-            err+="ngay sinh khong dung\n";
+            } catch (Exception e) {
+                err+="ngay sinh khong dung\n";
+            }
         }
         if(txtUsername.getText().length()==0){
             err+="Bạn phải điền tên đăng nhập\n";
         }
         else{
-            if(TraUser()==true){
-            err+="ton tai ten dang nhap\n";
-            }
+            if(TraUser()==true)
+                err+="Ton tai ten dang nhap\n";
         }
-        
         if (err != "") {
             JOptionPane.showMessageDialog(this, err);
             return false;
         }
         return true;
+    }
+    
+    void addDL(){
+        dl[0]=txtHoTen.getText();
+        dl[1]=String.valueOf(rbNu.isSelected());
+        dl[2]=txtNgaySinh.getText();
+        dl[3]=txtEmail.getText();
+        dl[4]=txtDienThoai.getText();
+        dl[5]=dsKhoa.get(cbQueQuan.getSelectedIndex()).toString();
+        dl[6]=txtUsername.getText();
+        dl[7]=txtPass.getText();
     }
 
     /**
@@ -397,15 +433,8 @@ public class dangKy extends javax.swing.JFrame {
     }//GEN-LAST:event_rbNuActionPerformed
 
     private void btDangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDangKyActionPerformed
+        addDL();
         if(kiemtra()==true){
-            dl[0]=txtHoTen.getText();
-        dl[1]=String.valueOf(rbNu.isSelected());
-        dl[2]=txtNgaySinh.getText();
-        dl[3]=txtEmail.getText();
-        dl[4]=txtDienThoai.getText();
-        dl[5]=dsKhoa.get(cbQueQuan.getSelectedIndex()).toString();
-        dl[6]=txtUsername.getText();
-        dl[7]=txtPass.getText();
         dkDangKy dk = new dkDangKy(dl);
         JOptionPane.showMessageDialog(this, dk.getKQ());
         }

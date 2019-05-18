@@ -13,12 +13,21 @@ import java.sql.ResultSet;
  */
 public class dangNhap {
     ketNoi kn = new ketNoi();
-    private String user,pass;
+    private String user,pass,TF,ten;
     public String kq;
+    int lop;
+    
     public dangNhap(String[] dl) {
         this.user=dl[0];
         this.pass=dl[1];
-        //System.out.println(user);
+        this.TF=dl[2];
+        System.out.println(TF);
+        if(TF.equals("true")){
+            System.out.println(" true nè");
+        }
+        else{
+            System.out.println(" false nè");
+        }
         //System.out.println(pass);
         kiemtraDN();
     }
@@ -28,20 +37,47 @@ public class dangNhap {
     String getKq(){
         return this.kq;
     }
+    public int getlop(){
+        return this.lop;
+    }
+    public String getTen(){
+        return this.ten;
+    }
     boolean kiemTra(){
-        try {
+        if(TF.equals("true")){
+            try {
             kn.ketNoi();
-            String sql="SELECT * FROM taiKhoan where userName='"+user+"' and passWord='"+pass+"'";
+            String sql="SELECT * FROM taiKhoanGV where userName='"+user+"' and passWord='"+pass+"'";
             kn.stmt = kn.cnn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = kn.stmt.executeQuery(sql);
             if(rs.next()==true){
+                ten=rs.getString("name");
+                lop=rs.getInt("class");
                 return true;
             }
         } catch (Exception e) {
             System.out.println(e.toString());
         }
         return false;
+        }
+        else{
+            try {
+            kn.ketNoi();
+            String sql="SELECT * FROM taiKhoanSV where userName='"+user+"' and passWord='"+pass+"'";
+            kn.stmt = kn.cnn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = kn.stmt.executeQuery(sql);
+            if(rs.next()==true){
+                ten=rs.getString("name");
+                lop=rs.getInt("class");
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return false;
+        }
     }
+    
     void kiemtraDN(){
         if(kiemTra()==true){
             this.setKq("Bạn đã đăng nhập thành công");
