@@ -12,9 +12,15 @@ import Code_CongNghePM.PhuongThuc.ptDangKy;
 public class dkDangKy {
     ptDangKy dk;
     public dkDangKy(String[] dl) {
-        dk = new ptDangKy(dl);
-        for(int i=0; i<8;i++){
-            System.out.println(dl[i]+"\n");
+        if(dl[8].equals("khong cotructor")){
+            dk = new ptDangKy(dl);
+                for(int i=0; i<9;i++){
+                    System.out.println(dl[i]+"\n");
+                }
+        
+        }
+        if(dl[8].equals("co cotructor")){
+            dk = new ptDangKy(dl, 1);
         }
     }
     public boolean getbool(){

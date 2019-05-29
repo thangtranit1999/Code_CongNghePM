@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import Code_CongNghePM.PhuongThucHayDung.Student;
 import Code_CongNghePM.PhuongThucHayDung.dayDuLieuSinhVien;
+import javax.swing.JOptionPane;
+import Code_CongNghePM.PhuongThucHayDung.themSuaXoa;
 
 /**
  *
@@ -20,16 +22,20 @@ public class giaoDienChinhChoGiaoVien extends javax.swing.JFrame {
      * Creates new form giaoDienChinhChoGiaoVien
      */
     int i=0;
+    String ten;
     private ArrayList<Student> list;
     DefaultTableModel model;
     dayDuLieuSinhVien dl= new dayDuLieuSinhVien();
-    public giaoDienChinhChoGiaoVien() {
+    public giaoDienChinhChoGiaoVien(String ten) {
         initComponents();
+        //lammoi();
+        this.ten = ten;
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         list = dl.getListStudent();
         model = (DefaultTableModel) jTable1.getModel();
         model.setColumnIdentifiers(new Object[]{
-            "STT", "Số Báo danh", "Họ Tên", "Giới Tính", "Ngày Sinh", "Email", "Điện Thoại", "Quê Quán","UserName"
+            "STT", "Số Báo danh", "Họ Tên", "Giới Tính", "Ngày Sinh", "Email", "Điện Thoại", "Quê Quán","Ngành học","UserName"
         });
         
         showTable();
@@ -42,16 +48,24 @@ public class giaoDienChinhChoGiaoVien extends javax.swing.JFrame {
             "STT", "Số Báo danh", "Họ Tên", "Giới Tính", "Ngày Sinh", "Email", "Điện Thoại", "Quê Quán","UserName"
         });
         
-        showTable();// hien thi thong tin trong danh sach
+        //showTable();// hien thi thong tin trong danh sach
     }
     public void showTable() {
         for (Student s : list) {
             model.addRow(new Object[]{
-                i++, s.getSBD(), s.getHoTen(), s.getGioiTinh(), s.getNgaySinh(), s.getEmail(), s.getDienThoai(), s.getQueQuan(),s.getuser()
+                i++, s.getSBD(), s.getHoTen(), s.getGioiTinh(), s.getNgaySinh(), s.getEmail(), s.getDienThoai(), s.getQueQuan(),s.getNganh(),s.getuser()
                 
             });
         }
     }
+    
+    public void showResult() {
+        Student s = list.get(list.size() - 1);
+        model.addRow(new Object[]{
+            i++, s.getSBD(), s.getHoTen(), s.getGioiTinh(), s.getNgaySinh(), s.getEmail(), s.getDienThoai(), s.getQueQuan(),s.getuser()
+        });
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,6 +79,12 @@ public class giaoDienChinhChoGiaoVien extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        txtTimKiem = new javax.swing.JTextField();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,29 +98,92 @@ public class giaoDienChinhChoGiaoVien extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Sửa Thông Tin Sinh Viên");
+        jButton1.setText("Sửa thông tin sinh viên");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
+        jButton2.setText("Xóa thông tin sinh viên");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Thêm thông tin sinh viên");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Trở lai");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Làm mới");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        txtTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTimKiemActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Tìm kiếm");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(661, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(372, 372, 372))
+                .addGap(79, 475, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton4))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton6)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton4)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(1, 1, 1)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButton1)
+                                .addComponent(jButton3)
+                                .addComponent(jButton2)))
+                        .addComponent(jButton5)))
                 .addContainerGap())
         );
 
@@ -109,9 +192,59 @@ public class giaoDienChinhChoGiaoVien extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        int a= jTable1.getSelectedRow();
+        System.out.print(a);
+        if(a==-1){
+            JOptionPane.showMessageDialog(this, "Bạn phải chọn một dòng");
+            return;
+        }
+        String[] dulieu  = new String[jTable1.getColumnCount()];
+        for(int i=0; i<jTable1.getColumnCount(); i++){
+            
+            dulieu[i] = jTable1.getValueAt(a, i).toString();
+        }
         System.out.println(jTable1.getSelectedRow());
+        new dangKy(dulieu).setVisible(true);
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        int i = jTable1.getSelectedRow();
+        if(i==-1){
+            JOptionPane.showMessageDialog(this, "Bạn vui lòng chọn dòng để xóa");
+            return;
+        }
+        int ok = JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa thí sinh "+jTable1.getValueAt(i, 2));
+        if(ok == JOptionPane.YES_OPTION){
+            String sql1="delete from sinhVien where SBD='"+jTable1.getValueAt(i, 1)+"';";
+            String sql2="delete from diemSV where SBD='"+jTable1.getValueAt(i, 1)+"';";
+            String sql3="delete from taiKhoanSV where SBD='"+jTable1.getValueAt(i, 1)+"';";
+            themSuaXoa x = new themSuaXoa(sql1,sql2,sql3);
+            JOptionPane.showConfirmDialog(this, x.getChuoi());
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        new dangKy().setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        showResult();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        homeGV h = new homeGV(ten);
+        h.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTimKiemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -143,14 +276,20 @@ public class giaoDienChinhChoGiaoVien extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new giaoDienChinhChoGiaoVien().setVisible(true);
+                //new giaoDienChinhChoGiaoVien().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }

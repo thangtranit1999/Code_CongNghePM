@@ -7,6 +7,7 @@ package Code_CongNghePM.DieuKhien;
 import Code_CongNghePM.PhuongThuc.dangNhap;
 import Code_CongNghePM.dangKy;
 import Code_CongNghePM.giaoDienChinhChoGiaoVien;
+import Code_CongNghePM.homeGV;
 
 /**
  *
@@ -22,17 +23,21 @@ public class dkDangNhap {
         System.out.println(dn.kq);
         phancap();
     }
+    public dkDangNhap(){
+        
+    }
     public String getKQ(){
         return dn.kq;
     }
     public String getTB(){
         return this.tb;
     }
+    
     private void phancap(){
         
         if(dn.getlop()==1){
             this.tb+="Chào bạn "+dn.getTen()+" bạn đang đăng nhập với tư cách giáo viên";
-            new giaoDienChinhChoGiaoVien().setVisible(true);
+            new homeGV(dn.getTen()).setVisible(true);
             
         }
         if(dn.getlop()==2){

@@ -29,24 +29,75 @@ public class dangKy extends javax.swing.JFrame {
     public dangKy() {
         initComponents();
         LoadKhoa();
+        LoadTinhThanh();
+        this.a="khong cotructor";
+        System.out.println(this.a);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
+    public dangKy(String[] dl){
+        initComponents();
+        LoadKhoa();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        txtHoTen.setText(dl[2]);
+         if("false".equalsIgnoreCase(dl[3]))
+            rbNam.setSelected(true);
+        else
+            rbNu.setSelected(true);
+        txtNgaySinh.setText(dl[4].substring(0, 10));
+        txtEmail.setText(dl[5]);
+        txtDienThoai.setText(dl[6]);
+        LoadKhoa();
+        txtUsername.setText(dl[8]);
+        this.a="co cotructor";
+        System.out.println(this.a);
+        txtUsername.disable();
+        txtPass.disable();
+        txtnhaplai.disable();
+        JOptionPane.showMessageDialog(this, "Bạn đang sử dụng tính năng sửa\n bạn lưu ý không được sửa userName and passWord");
     }
     ketNoi kn = new ketNoi();
     Vector dsKhoa;
-    String[] dl=new String[8];
+    Vector dsTinh;
+    String[] dl=new String[10];
     dkDangKy dk;
+    String a;
     private void LoadKhoa()
+    {
+        try
+        {
+            kn.ketNoi();
+            String sql="select * from nganh";
+            ResultSet rs = kn.stmt.executeQuery(sql);
+            dsKhoa=new Vector();
+            cbNganh.removeAllItems();      
+            while(rs.next())
+            {
+               Object o1 = rs.getObject(1);//mada
+                dsKhoa.addElement(o1);
+                
+                Object o2 = rs.getObject(1);//tenda
+                cbNganh.addItem(o2);
+            }
+            kn.ngatketnoi();
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Lỗi load dữ liệu: "+ ex.toString());
+        }
+    }
+    private void LoadTinhThanh()
     {
         try
         {
             kn.ketNoi();
             String sql="select tenTinh from tinhThanh";
             ResultSet rs = kn.stmt.executeQuery(sql);
-            dsKhoa=new Vector();
+            dsTinh=new Vector();
             cbQueQuan.removeAllItems();      
             while(rs.next())
             {
                Object o1 = rs.getObject(1);//mada
-                dsKhoa.addElement(o1);
+                dsTinh.addElement(o1);
                 
                 Object o2 = rs.getObject(1);//tenda
                 cbQueQuan.addItem(o2);
@@ -190,9 +241,11 @@ public class dangKy extends javax.swing.JFrame {
         dl[2]=txtNgaySinh.getText();
         dl[3]=txtEmail.getText();
         dl[4]=txtDienThoai.getText();
-        dl[5]=dsKhoa.get(cbQueQuan.getSelectedIndex()).toString();
+        dl[5]=dsTinh.get(cbQueQuan.getSelectedIndex()).toString();
         dl[6]=txtUsername.getText();
         dl[7]=txtPass.getText();
+        dl[8]=this.a;
+        dl[9]=dsKhoa.get(cbNganh.getSelectedIndex()).toString();
     }
 
     /**
@@ -235,6 +288,9 @@ public class dangKy extends javax.swing.JFrame {
         txtHoTen = new javax.swing.JTextField();
         btThoat = new javax.swing.JButton();
         cbQueQuan = new javax.swing.JComboBox();
+        jlbCanhBao = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        cbNganh = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -324,6 +380,12 @@ public class dangKy extends javax.swing.JFrame {
         cbQueQuan.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         cbQueQuan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel7.setText("Ngành");
+
+        cbNganh.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        cbNganh.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -341,6 +403,16 @@ public class dangKy extends javax.swing.JFrame {
                         .addGap(18, 18, 18))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel8))
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtnhaplai)
+                            .addComponent(txtPass)
+                            .addComponent(txtUsername))
+                        .addGap(77, 77, 77))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
@@ -353,23 +425,19 @@ public class dangKy extends javax.swing.JFrame {
                                 .addComponent(rbNam)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(rbNu))
+                            .addComponent(jlbCanhBao)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(cbQueQuan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel7)
+                                    .addGap(48, 48, 48)
+                                    .addComponent(cbNganh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(txtHoTen, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
                                 .addComponent(txtNgaySinh, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtDienThoai, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(cbQueQuan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel8))
-                        .addGap(42, 42, 42)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtnhaplai)
-                            .addComponent(txtPass)
-                            .addComponent(txtUsername))
-                        .addGap(77, 77, 77))))
+                                .addComponent(txtDienThoai, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -378,7 +446,9 @@ public class dangKy extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(2, 2, 2)
+                .addComponent(jlbCanhBao, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(rbNam)
@@ -398,8 +468,10 @@ public class dangKy extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(cbQueQuan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                    .addComponent(cbQueQuan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(cbNganh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -414,7 +486,7 @@ public class dangKy extends javax.swing.JFrame {
                     .addComponent(btDangKy)
                     .addComponent(btNhapLai)
                     .addComponent(btThoat))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -433,11 +505,21 @@ public class dangKy extends javax.swing.JFrame {
     }//GEN-LAST:event_rbNuActionPerformed
 
     private void btDangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDangKyActionPerformed
-        addDL();
-        if(kiemtra()==true){
-        dkDangKy dk = new dkDangKy(dl);
-        JOptionPane.showMessageDialog(this, dk.getKQ());
+        if(a.equals("co cotructor")){
+            System.out.print("ok roi");
+            addDL();
+            dkDangKy dk = new dkDangKy(dl);
+            JOptionPane.showMessageDialog(this, dk.getKQ());
         }
+        if(a.equals("khong cotructor")){
+            addDL();
+            if(kiemtra()==true){
+                dkDangKy dk = new dkDangKy(dl);
+                JOptionPane.showMessageDialog(this, dk.getKQ());
+            }
+        }
+        
+            
     }//GEN-LAST:event_btDangKyActionPerformed
 
     private void btNhapLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNhapLaiActionPerformed
@@ -492,6 +574,7 @@ public class dangKy extends javax.swing.JFrame {
     private javax.swing.JButton btDangKy;
     private javax.swing.JButton btNhapLai;
     private javax.swing.JButton btThoat;
+    private javax.swing.JComboBox cbNganh;
     private javax.swing.JComboBox cbQueQuan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -499,8 +582,10 @@ public class dangKy extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jlbCanhBao;
     private javax.swing.JRadioButton rbNam;
     private javax.swing.JRadioButton rbNu;
     private javax.swing.JTextField txtDienThoai;

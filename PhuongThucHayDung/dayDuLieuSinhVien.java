@@ -20,7 +20,7 @@ public class dayDuLieuSinhVien {
         ArrayList<Student> list = new ArrayList<>();
         try {
             kn.ketNoi();
-             String sql = "SELECT * FROM sinhVien";
+            String sql = "SELECT * FROM sinhVien";
             ResultSet rs = kn.stmt.executeQuery(sql);
             while(rs.next()){
                 Student s = new Student();
@@ -31,6 +31,7 @@ public class dayDuLieuSinhVien {
                 s.setEmail(rs.getString("email"));
                 s.setDienThoai(rs.getString("dienThoai"));
                 s.setQueQuan(rs.getString("queQuan"));
+                s.setNganh(rs.getString("nganh"));
                 s.setUser(rs.getString("userName"));
                 list.add(s);
             }
@@ -41,5 +42,27 @@ public class dayDuLieuSinhVien {
         
         return list;
     }
-    
+    public ArrayList<Student> getListDiem(){
+    ArrayList<Student> list = new ArrayList<>();
+        try {
+            kn.ketNoi();
+            String sql="SELECT * from SQLdiemSV";
+            ResultSet rs = kn.stmt.executeQuery(sql);
+            while(rs.next()){
+                Student s = new Student();
+                s.setSBD(rs.getInt("SBD"));
+                System.out.println(rs.getString("hoTen"));
+                s.setHoTen(rs.getString("hoTen"));
+                System.out.println(rs.getInt("toan"));
+                
+                s.setToan(rs.getFloat("toan"));
+                s.setVan(rs.getFloat("van"));
+                s.setAnh(rs.getFloat("anh"));
+                list.add(s);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    return list;
+}
 }

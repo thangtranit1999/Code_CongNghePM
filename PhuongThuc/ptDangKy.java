@@ -14,15 +14,21 @@ import javax.swing.JOptionPane;
  * @author Tran Thang
  */
 public class ptDangKy {
-    String[] dl = new String[8];
+    String[] dl = new String[10];
     String chuoi;
-    
+    public String upDate1,upDate2,upDate3;
+    public ptDangKy(String[] dl,int a){
+        this.dl=dl;
+        int id=getID();
+        upDate(id);
+        System.out.println(dl[9]);
+    }
     public ptDangKy(String[] dl) {
         this.dl=dl;
         sql1();
         int id=getID();
         sql2(id);
-        themSV(id);
+        sql3(id);
     }
     
     ketNoi kn = new ketNoi();
@@ -55,9 +61,9 @@ public class ptDangKy {
         else{
             try {
                 kn.ketNoi();
-                String sql1="insert into sinhVien(hoTen, gioiTinh, ngaySinh, email, dienThoai, queQuan, userName) "
+                String sql1="insert into sinhVien(hoTen, gioiTinh, ngaySinh, email, dienThoai, queQuan, nganh, userName) "
                         +"values('"+dl[0]+"','"+dl[1]+"','"+dl[2]
-                        +"','"+dl[3]+"','"+dl[4]+"','"+dl[5]+"','"+dl[6]+"')";
+                        +"','"+dl[3]+"','"+dl[4]+"','"+dl[5]+"','"+dl[9]+"','"+dl[6]+"')";
                 kn.stmt.executeUpdate(sql1);
                 kn.ngatketnoi();
             } catch (Exception e) {
@@ -77,7 +83,7 @@ public class ptDangKy {
                 chuoi= e.toString();
             }
     }
-    private void themSV(int id){
+    private void sql3(int id){
 
             try {
                 kn.ketNoi();
@@ -106,5 +112,22 @@ public class ptDangKy {
         }
         System.out.println("ID:"+id);
         return id;
+    }
+    private void upDate(int id){
+        try
+        {
+        kn.ketNoi();
+            String sql="update sinhVien set HoTen='"+dl[0]
+                    +"',gioiTinh='"+dl[1]
+                    +"', ngaySinh='"+dl[2]
+                    +"', email='"+dl[3]+"',dienThoai='"+dl[4]+"',queQuan='"+dl[5]+"',nganh='"+dl[9]+"' where SBD='"+id+"'";
+            kn.stmt.executeUpdate(sql);
+            chuoi= "Bạn đã đổi thông tin thành công!";
+            kn.ngatketnoi();
+        }
+        catch(Exception ex)
+        {
+            chuoi = ex.toString();
+        }   
     }
 }

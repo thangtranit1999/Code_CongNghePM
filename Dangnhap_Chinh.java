@@ -19,6 +19,7 @@ public class Dangnhap_Chinh extends javax.swing.JFrame {
      */
     public Dangnhap_Chinh() {
         initComponents();
+        
     }
     String dl[] = new String[3];
     private boolean ktra(){
@@ -189,8 +190,9 @@ public class Dangnhap_Chinh extends javax.swing.JFrame {
             //System.out.println(dn.getKQ());
             JOptionPane.showMessageDialog(this, dn.getKQ());
             if(!dn.getTB().equals("")){
+                this.dispose();
                 JOptionPane.showMessageDialog(this, dn.getTB());
-            this.dispose();
+                
             }
             
         }

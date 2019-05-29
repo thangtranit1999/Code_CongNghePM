@@ -15,8 +15,9 @@ import java.util.Date;
  */
 public class Student implements Serializable {
 
-    private String hoTen,ngaySinh,email,dienThoai,queQuan,userName;
+    private String hoTen,ngaySinh,email,dienThoai,queQuan,userName,nganh;
     private int ID;
+    private float toan,van,anh;
     private boolean gioiTinh;
 
     public String getHoTen() {
@@ -78,5 +79,29 @@ public class Student implements Serializable {
     }
     public void setUser(String ns){
         this.userName=ns;
+    }
+    public String getNganh  (){
+        return nganh;
+    }
+    public void setNganh(String ns){
+        this.nganh=ns;
+    }
+    public float getToan(){
+        return toan;
+    }
+    public void setToan(float toan){
+        this.toan = toan;
+    }
+    public float getVan(){
+        return van;
+    }
+    public void setVan(float toan){
+        this.van = toan;
+    }
+    public float getAnh(){
+        return anh;
+    }
+    public void setAnh(float toan){
+        this.anh = toan;
     }
 }
