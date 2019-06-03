@@ -69,6 +69,11 @@ public class homeGV extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jButton3.setText("Thống kê");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jButton4.setText("Ngành Thi");
@@ -149,7 +154,15 @@ public class homeGV extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        new nganhThi(ten).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        new thongKe(ten).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -24,8 +24,25 @@ public class themSuaXoa {
     public themSuaXoa(String sql){//một sql để sửa điểm
         sua(sql);
     }
+    public themSuaXoa(String sql,String loai){
+        them(sql);
+    }
     
     private void sua(String sql){
+        try
+        {
+            kn.ketNoi();
+            kn.stmt.executeUpdate(sql);
+            this.chuoi=("Bạn đã sửa thành công");
+            kn.ngatketnoi();
+        }
+        catch(Exception ex)
+        {
+            this.chuoi="Đã xảy ra lỗi";
+            System.out.println(ex.toString());
+        }   
+    }
+    private void them(String sql){
         try
         {
             kn.ketNoi();

@@ -140,6 +140,11 @@ public class giaoDienChinhChoGiaoVien extends javax.swing.JFrame {
         });
 
         jButton6.setText("Tìm kiếm");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -245,6 +250,35 @@ public class giaoDienChinhChoGiaoVien extends javax.swing.JFrame {
     private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTimKiemActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        /*for(int i = 0; i < jTable1.getRowCount(); i++){//For each row
+        for(int j = 0; j < jTable1.getColumnCount(); j++){//For each column in that row
+            if(jTable1.getModel().getValueAt(i, j).equals("0965198994")){//Search the model
+                System.out.println(jTable1.getModel().getValueAt(i, 1));//Print if found string
+
+        
+                //for (Student s : list) {
+                    model.addRow(new Object[]{
+                    jTable1.getModel().getValueAt(i, 0),
+                    jTable1.getModel().getValueAt(i, 1),
+                    jTable1.getModel().getValueAt(i, 2),
+                    jTable1.getModel().getValueAt(i, 3),
+                    jTable1.getModel().getValueAt(i, 4),
+                    jTable1.getModel().getValueAt(i, 5),
+                    jTable1.getModel().getValueAt(i, 6),
+                    jTable1.getModel().getValueAt(i, 7),
+                    jTable1.getModel().getValueAt(i, 8),
+                    jTable1.getModel().getValueAt(i, 9)
+                });
+                    //}
+                    break;
+            }
+            
+        }//For loop inner
+    }//For loop outer*/
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments

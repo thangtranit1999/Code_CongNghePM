@@ -39,6 +39,9 @@ public class listDiemSV extends javax.swing.JFrame {
         });
         showTable();
     }
+    void update(){
+        showResult();
+    }
     public void showTable() {
         for (Student s : list) {
             model.addRow(new Object[]{
@@ -47,7 +50,12 @@ public class listDiemSV extends javax.swing.JFrame {
             });
         }
     }
-    
+    public void showResult() {
+        Student s = list.get(list.size() - 1);
+        model.addRow(new Object[]{
+            i++, s.getSBD(), s.getHoTen(), s.getToan(), s.getVan(), s.getAnh()
+        });
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,6 +75,7 @@ public class listDiemSV extends javax.swing.JFrame {
         toan = new javax.swing.JTextField();
         van = new javax.swing.JTextField();
         anh = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,10 +118,37 @@ public class listDiemSV extends javax.swing.JFrame {
         jLabel3.setText("Toán:");
 
         toan.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
+        toan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                toanMouseClicked(evt);
+            }
+        });
+        toan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toanActionPerformed(evt);
+            }
+        });
 
         van.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
+        van.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                vanMouseClicked(evt);
+            }
+        });
 
         anh.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
+        anh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                anhMouseClicked(evt);
+            }
+        });
+
+        jButton3.setText("jButton3");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -120,20 +156,25 @@ public class listDiemSV extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(van, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(toan, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(anh, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(van, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(toan, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(anh, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton1)
+                            .addComponent(jButton2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jButton3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -141,6 +182,8 @@ public class listDiemSV extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
                             .addComponent(toan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -189,6 +232,30 @@ public class listDiemSV extends javax.swing.JFrame {
         anh.setText(diemSV.getValueAt(row, 5).toString());
     }//GEN-LAST:event_diemSVMouseClicked
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        update();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void toanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_toanActionPerformed
+
+    private void toanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toanMouseClicked
+        // TODO add your handling code here:
+        toan.setText("");
+    }//GEN-LAST:event_toanMouseClicked
+
+    private void vanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vanMouseClicked
+        // TODO add your handling code here:
+        van.setText("");
+    }//GEN-LAST:event_vanMouseClicked
+
+    private void anhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_anhMouseClicked
+        // TODO add your handling code here:
+        anh.setText("");
+    }//GEN-LAST:event_anhMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -229,6 +296,7 @@ public class listDiemSV extends javax.swing.JFrame {
     private javax.swing.JTable diemSV;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

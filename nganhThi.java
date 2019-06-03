@@ -4,7 +4,13 @@
  * and open the template in the editor.
  */
 package Code_CongNghePM;
-
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import Code_CongNghePM.PhuongThuc.ketNoi;
+import Code_CongNghePM.PhuongThucHayDung.themSuaXoa;
 /**
  *
  * @author Tran Thang
@@ -14,10 +20,91 @@ public class nganhThi extends javax.swing.JFrame {
     /**
      * Creates new form nganhThi
      */
-    public nganhThi() {
+    String ten;
+    public nganhThi(String ten) {
         initComponents();
+        this.ten=ten;
+        loadData();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
+    boolean KiemTraNganh(){
+        int i = tb.getSelectedRow();
+        try {
+            kn.ketNoi();
+            String sql = "select nganh from sinhVien where nganh='"+tb.getValueAt(i, 0)+"'";
+            kn.stmt = kn.cnn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = kn.stmt.executeQuery(sql);
+            if(rs.next()==true){
+                return true;
+            }
+            kn.ngatketnoi();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.toString());
+        }
+        return false;
+    }
+    boolean kiemTra(){
+        String err="";
+        if(txtMaNganh.getText().equals("")){
+            err+="Bạn phải nhập mã nganh\n";
+        }
+        if(txtTenNganh.getText().equals("")){
+            err+="Bạn phải nhập tên ngành\n";
+        }
+        if(txtChiTieu.getText().equals("")){
+            err+="Bạn phải nhập chỉ tiêu\n";
+        }
+        if(!err.equals("")){
+            JOptionPane.showMessageDialog(this, err);
+            return false;
+        }
+        return true;
+    }
+    ketNoi kn = new ketNoi();
+    private ResultSet rs;
+    Vector columnName;
+    DefaultTableModel model;
+    private void nhapLai(){
+        txtChiTieu.setText("");
+        txtTenNganh.setText("");
+    }
+    private void loadData(){
+        try {
+            kn.ketNoi();
+            String sql="select * from nganh";
+            ResultSet rs = kn.stmt.executeQuery(sql);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            columnName = new Vector();
+            int n=rsmd.getColumnCount();
+            for(int i=1; i<=n; i++){
+                columnName.addElement(rsmd.getColumnName(i));
+            }
+            model = new DefaultTableModel();
+            model.setColumnIdentifiers(columnName);
+            while(rs.next()){
+                Vector  data = new Vector();
+                for(int i=1; i<=n; i++){
+                    Object o = rs.getObject(i);
+                    data.addElement(o);
+                }
+                model.addRow(data);
+            }
+            tb.removeAll();
+            tb.setModel(model);
+            kn.ngatketnoi();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.toString());
+            e.printStackTrace();
+        }
+    }
+    private String addKhoa(){
+        
+            String sql = "insert into nganh(MaNganh, TenNganh, ChiTieu) values('"+txtMaNganh.getText()+
+                    "','"+txtTenNganh.getText()
+                    +"','"+txtChiTieu.getText()+"')";
+            return sql;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -167,7 +254,8 @@ public class nganhThi extends javax.swing.JFrame {
         int a = JOptionPane.showConfirmDialog(this, "Bạn có trắc muốn thêm khoa");
         if(a==JOptionPane.YES_OPTION){
             if(kiemTra()==true){
-                addKhoa();
+                themSuaXoa t = new themSuaXoa(addKhoa(), ten);
+                JOptionPane.showMessageDialog(this, t.getChuoi());
                 loadData();
                 nhapLai();
             }
@@ -176,6 +264,7 @@ public class nganhThi extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        txtMaNganh.disable();
         int i= tb.getSelectedRow();
         if(i==-1){
             JOptionPane.showMessageDialog(this, "Bạn phải chọn một dòng");
@@ -187,18 +276,11 @@ public class nganhThi extends javax.swing.JFrame {
             txtMaNganh.setText(tb.getValueAt(i, 0).toString());
         }
         else{
-            try {
-                kn.ketNoi();
-                String sql1="update nganh set TenNganh='"+txtTenNganh.getText()
+            String sql1="update nganh set TenNganh='"+txtTenNganh.getText()
                 +"',ChiTieu='"+txtChiTieu.getText()
                 +"' where MaNganh='"+txtMaNganh.getText()+"'";
-                kn.stmt.executeUpdate(sql1);
-                JOptionPane.showMessageDialog(this, "Bạn đã sửa thành công");
-                loadData();
-                kn.ngatketnoi();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e.toString());
-            }
+            themSuaXoa s = new themSuaXoa(sql1);
+            JOptionPane.showMessageDialog(this, s.getChuoi());
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -234,6 +316,7 @@ public class nganhThi extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        new homeGV(ten).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -267,7 +350,7 @@ public class nganhThi extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new nganhThi().setVisible(true);
+               // new nganhThi().setVisible(true);
             }
         });
     }

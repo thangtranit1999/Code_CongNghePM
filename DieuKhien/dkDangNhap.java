@@ -8,6 +8,7 @@ import Code_CongNghePM.PhuongThuc.dangNhap;
 import Code_CongNghePM.dangKy;
 import Code_CongNghePM.giaoDienChinhChoGiaoVien;
 import Code_CongNghePM.homeGV;
+import Code_CongNghePM.homeStudent;
 
 /**
  *
@@ -42,6 +43,7 @@ public class dkDangNhap {
         }
         if(dn.getlop()==2){
             this.tb+="Chào bạn "+dn.getTen();
+            new homeStudent(dn.layDL()).setVisible(true);
         }
         
     }
